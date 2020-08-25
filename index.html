@@ -1,41 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>React Sports Game</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <title>React Sports Game</title>
 </head>
+
 <body>
-    <!-- include an element for ReactDOM to attach our React-generated elements to -->
-    <div id="root"></div>
+  <!-- include an element for ReactDOM to attach our React-generated elements to -->
+  <div id="root"></div>
 
-    <!-- include React and ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <!-- include Babel standalone so we can process JSX in React.createElement stuff -->
-    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <!-- include React and ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- include Babel standalone so we can process JSX in React.createElement stuff -->
+  <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
-    <!-- include our JS+JSX for the React Appliccation -->
-<script type="text/babel">
+  <!-- include our JS+JSX for the React Appliccation -->
+  <script type="text/babel">
+    class Team extends React.Component {
 
-// An App component under which all other components will be added
-function App (props) {
-  return (
-    <div>
-      <h1>Welcome to the Sports Game starter!</h1>
-      <em>This file represents the way your code should look after completing the <strong>Setup</strong> steps in the instructions.</em>
-    </div>
-  )
-}
+      constructor(props) {
+        super(props)
+        this.state = {
+          shots: 0,
+          score: 0
+        }
+        this.shotSound=new Audio('/Users/muayadbakhtan/Documents/kenzi_part1/react-sport-game2/react-basics-sports-game/imgs/audio1.mp3')
+      this.scoreSound=new Audio('/Users/muayadbakhtan/Documents/kenzi_part1/react-sport-game2/react-basics-sports-game/imgs/audio2.mp3')
+      }
+      shotHandler = () => {
+        let score = this.state.score
+        this.shotSound.play()
+        if (Math.random() > 0.5) {
+          score += 1
+          setTimeout(() =>{
+          this.scoreSound.play()
+        }, 50)
 
 
+          this.scoreSound.play()
 
-// Render the App
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
-</script>
+        }
+        this.setState((state, props) => ({
+          shots: state.shots + 1,
+          score
+        }))
+      }
+      render() {
+        return (
+          <div className="Team">
+            <h2> {this.props.name}</h2>
+            <div className="identity">
+              <img src={this.props.logo} alt={this.props.name} width="350px" hight="350px" />
+            </div>
+            <div>
+              <strong> Shots :</strong> {this.state.shots}
+            </div>
+            <div>
+              <strong> Score: </strong> {this.state.score}
+            </div>
+            <div>
+              
+              </div>
+            <button onClick={this.shotHandler}> shoot! </button>
+          </div>
+        )
+      }
+    }
+    // An App component under which all other components will be added
+    function App(props) {
+      return (
+        <div className="App">
+          <h1> welcome {props.venue}</h1>
+          <div className="state">
+            <Team
+              name=" YFA"
+              logo="/Users/muayadbakhtan/Documents/kenzi_part1/react-sport-game2/react-basics-sports-game/imgs/YFA.png" />
+            <div className="versus">
+              <h1>VS</h1>
+            </div>
+            <Team
+              name=" SAFF"
+              logo="/Users/muayadbakhtan/Documents/kenzi_part1/react-sport-game2/react-basics-sports-game/imgs/SAFF.png" />
+          </div>
+        </div>
+      )
+    }
+
+    // Render the App
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root')
+    )
+  </script>
 </body>
+
 </html>
